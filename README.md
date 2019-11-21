@@ -6,8 +6,8 @@ Collection of code snippets to make command line life a bit easier...
 * [WP-CLI](#wp-cli)
 * [PHP](#php)
 * [.htaccess](#htaccess)
-* [Bash Scripting](#bash-scripting)
 * [Bash Commands](#bash-commands)
+* [Bash Scripting](#bash-scripting)
 # WordPress: 
 # Enable updates when asked for FTP credentials
 _This happens when file/folder write permissions are set securely_
@@ -79,46 +79,31 @@ wp_die( '<pre>' . print_r( array( ... ), 1 ) . '</pre>' );
 ```
 
 
-# Bash Scripting:
-
-## Qick and dirty timer
-_From [Unix Stack Exchange](https://unix.stackexchange.com/a/52347/274236)_
-```bash
-start=`date +%s`
-# Code to be timed...
-end=`date +%s`
-
-runtime=$((end-start))
-```
-or
-```bash
-start_time=$SECONDS
-# Code to be timed...
-elapsed_time=$(($SECONDS - $start_time))
-```
-
-## “Yes/No” Menu
-_From [Tec Admin](https://tecadmin.net/bash-script-prompt-to-confirm-yes-no/)_
-
-```bash
-while true
-do
- read -r -p "Is $this_variable correct? [Y/n] " input
- 
- case $input in
-     [yY][eE][sS]|[yY])
- break;;
-     [nN][oO]|[nN])
- read -p "Enter variable again:" this_variable;;
-     *)
- echo "Invalid input..."
- ;;
- esac
-done
-```
-
-
 # Bash Commands:
+
+## List directories sorted by total number of files recursively, starting with (.)
+_From [StackExchange](https://superuser.com/a/325174)_
+```bash
+find . -type d | while read dir; do echo "$dir" : $(find "$dir" -type f | wc -l); done | sort -k2 -t ':' -n;
+```
+
+## List directories and files sorted by size
+_From [StackOverflow](https://stackoverflow.com/a/14749369)_
+```bash
+du -a -h --max-depth=1 | sort -h
+```
+
+## Show total size of files of type (.jpg) recursively in a directory (.)
+_From [StackExchange](https://unix.stackexchange.com/a/41552)_
+```bash
+find . -type f -name '*.jpg' -exec du -ch {} + | grep total$
+```
+
+## Show total size of a directory (.)
+_From [StackExchange](https://unix.stackexchange.com/a/185765)_
+```bash
+du -sh .
+```
 
 ## TTL value of a DNS record
 _From [ShellHacks](https://www.shellhacks.com/dns-ttl-lookup/)_
@@ -176,6 +161,45 @@ find . -type d ! -perm 755 -print0 | xargs -0 chmod 755
 ## Find files and directories not owned by GROUPNAME, excluding some paths
 ```bash
 find . ! -group GROUPNAME ! -path './APATH/' ! -path './ANOTHERPATH'
+```
+
+
+# Bash Scripting:
+
+## Qick and dirty timer
+_From [Unix Stack Exchange](https://unix.stackexchange.com/a/52347/274236)_
+```bash
+start=`date +%s`
+# Code to be timed...
+end=`date +%s`
+
+runtime=$((end-start))
+```
+or
+```bash
+start_time=$SECONDS
+# Code to be timed...
+elapsed_time=$(($SECONDS - $start_time))
+```
+
+## “Yes/No” Menu
+_From [Tec Admin](https://tecadmin.net/bash-script-prompt-to-confirm-yes-no/)_
+
+```bash
+while true
+do
+	read -r -p "Is $this_variable correct? [Y/n] " input
+	
+	case $input in
+		[yY][eE][sS]|[yY])
+		break;;
+		[nN][oO]|[nN])
+		read -p "Enter variable again:" this_variable;;
+		*)
+		echo "Invalid input..."
+		;;
+	esac
+done
 ```
 
 [1]: https://www.shellhacks.com/
