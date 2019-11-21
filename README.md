@@ -1,7 +1,13 @@
 # Bits of Code
 Collection of code snippets to make command line life a bit easier...
 
-
+# Table of Contents:
+* [WordPress](#wordpress)
+* [WP-CLI](#wp-cli)
+* [PHP](#php)
+* [.htaccess](#htaccess)
+* [Bash Scripting](#bash-scripting)
+* [Bash Commands](#bash-commands)
 # WordPress: 
 # Enable updates when asked for FTP credentials
 _This happens when file/folder write permissions are set securely_
