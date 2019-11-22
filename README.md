@@ -81,6 +81,11 @@ wp_die( '<pre>' . print_r( array( ... ), 1 ) . '</pre>' );
 
 # Bash Commands:
 
+## Generate public/private rsa key pair with (YOUR_EMAIL) as note, then output keys to screen
+```bash
+ssh-keygen -C YOUR_EMAIL -m PEM -f ./id_rsa && echo && cat id_rsa && echo && cat id_rsa.pub
+```
+
 ## List directories sorted by total number of files recursively, starting with (.)
 _From [StackExchange](https://superuser.com/a/325174)_
 ```bash
