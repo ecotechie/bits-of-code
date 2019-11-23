@@ -91,6 +91,11 @@ ssh-keygen -C YOUR_EMAIL -m PEM -f ./id_rsa && echo && cat id_rsa && echo && cat
 tail --follow FILE_NAME
 ```
 
+## Display disk space information
+```bash
+df -hT
+```
+
 ## List directories sorted by total number of files recursively, starting with (.)
 _From [StackExchange](https://superuser.com/a/325174)_
 ```bash
