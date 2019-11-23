@@ -86,6 +86,11 @@ wp_die( '<pre>' . print_r( array( ... ), 1 ) . '</pre>' );
 ssh-keygen -C YOUR_EMAIL -m PEM -f ./id_rsa && echo && cat id_rsa && echo && cat id_rsa.pub
 ```
 
+## Display new information as it is being written to a file (FILE_NAME)
+```bash
+tail --follow FILE_NAME
+```
+
 ## List directories sorted by total number of files recursively, starting with (.)
 _From [StackExchange](https://superuser.com/a/325174)_
 ```bash
