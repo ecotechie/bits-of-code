@@ -86,6 +86,11 @@ wp_die( '<pre>' . print_r( array( ... ), 1 ) . '</pre>' );
 ssh-keygen -C YOUR_EMAIL -m PEM -f ./id_rsa && echo && cat id_rsa && echo && cat id_rsa.pub
 ```
 
+### SSH tunnel into a MySQL shell:
+```bash
+ssh -i ./id_rsa -p 22 user@domain.com -L 65000:127.0.0.1:3306 -N
+```
+
 ## Display new information as it is being written to a file (FILE_NAME)
 ```bash
 tail --follow FILE_NAME
@@ -197,24 +202,66 @@ start_time=$SECONDS
 elapsed_time=$(($SECONDS - $start_time))
 ```
 
-## “Yes/No” Menu
-_From [Tec Admin](https://tecadmin.net/bash-script-prompt-to-confirm-yes-no/)_
+## “Validate Input” Function
+_Inspired by [Tec Admin](https://tecadmin.net/bash-script-prompt-to-confirm-yes-no/)_
 
 ```bash
-while true
-do
-	read -r -p "Is $this_variable correct? [Y/n] " input
-	
-	case $input in
-		[yY][eE][sS]|[yY])
-		break;;
-		[nN][oO]|[nN])
-		read -p "Enter variable again:" this_variable;;
-		*)
-		echo "Invalid input..."
-		;;
-	esac
-done
+validate_input () {
+  read -r -p "$*" input 
+  while true
+  do
+    read -r -p "Is $input correct? [Y/n] " maybe
+
+    case $maybe in
+      [yY][eE][sS]|[yY]|"")
+      echo "$input"
+      break
+      ;;
+      [nN][oO]|[nN])
+      read -p "Enter variable again:" $input
+      ;;
+      *)
+      echo "Invalid input..."
+      echo
+      ;;
+    esac
+  done
+}
+```
+
+## "Yes/No" Function
+
+```bash
+yes_no () {
+  echo
+  while true
+  do
+    read -r -p "$* [Y/n] " maybe
+    
+    case $maybe in
+      #Return 0, a non failure status.
+      [yY][eE][sS]|[yY]|"")
+      return 0
+      break
+      ;;
+      # Return 101, a non-zero (failure) status.
+      [nN][oO]|[nN])
+      return 101
+      break
+      ;;
+      *)
+      echo "Invalid input..."
+      ;;
+    esac
+  done
+}
+```
+
+## Quick Yes/No logic
+
+```bash
+read -r -p "What's your question? [y/N] " response
+[[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]] && $do_something || $do_something_else
 ```
 
 [1]: https://www.shellhacks.com/
