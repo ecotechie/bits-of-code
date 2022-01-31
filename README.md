@@ -77,7 +77,33 @@ wp_die( '<pre>' . print_r( array( ... ), 1 ) . '</pre>' );
     http://{PROD}/wp-content/uploads/$1 [NC,L]
 </IfModule>
 ```
-
+## Add www. and https
+```apache
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTPS} off
+  RewriteCond %{HTTP_HOST} !^www.
+  RewriteRule ^(.*)$ https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+```
+## Strip www. add https DOESN'T WORK!!!!!
+```apache
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTPS} off
+  RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+  RewriteRule ^(.*)$ https://%1%{REQUEST_URI} [L,R=301]
+<IfModule>
+```
+## This does:
+```apache
+<IfModule mod_rewrite.c>
+  RewriteEngine on
+  RewriteCond %{HTTP_HOST} ^www. [NC,OR]
+  RewriteCond %{HTTPS} off
+  RewriteRule ^(.*)$ https://DOMAIN.com/$1 [L,R=301]
+<IfModule>
+```
 
 # Bash Commands:
 
