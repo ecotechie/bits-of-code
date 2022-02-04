@@ -51,9 +51,9 @@ add_filter( 'wp_nav_menu_args', 'ecotechie_wp_nav_menu_args' );
 
 # WP-CLI:
 
-## Convert all database tables to Innodb with WP-CLI
+## Set database option to not autoload
 ```php
-wp @ALIAS db query "SELECT CONCAT('ALTER TABLE ', TABLE_SCHEMA,'.', TABLE_NAME, ' ENGINE=InnoDB;') FROM information_schema.TABLES WHERE ENGINE = 'MyISAM'" --skip-column-names | wp @ALIAS db query
+wp db query "UPDATE $(wp db prefix)options SET autoload='no' WHERE option_name='OPTION_NAME'"
 ```
 
 
