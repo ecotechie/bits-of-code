@@ -51,6 +51,11 @@ add_filter( 'wp_nav_menu_args', 'ecotechie_wp_nav_menu_args' );
 
 # WP-CLI:
 
+## Get 20 largest autoloaded option values ordered by largest first 
+```PHP
+wp db query "SELECT option_name, length(option_value) AS option_value_length FROM wp_options WHERE autoload='yes' ORDER BY option_value_length DESC LIMIT 20;"
+```
+
 ## Set database option to not autoload
 ```php
 wp db query "UPDATE $(wp db prefix)options SET autoload='no' WHERE option_name='OPTION_NAME'"
