@@ -85,28 +85,43 @@ wp_die( '<pre>' . print_r( array( ... ), 1 ) . '</pre>' );
 ## Add www. and https
 ```apache
 <IfModule mod_rewrite.c>
+  RewriteCond %{HTTP_HOST} !^www\. [NC]
+  RewriteRule ^ https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+#not working
+<IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteCond %{HTTPS} off
   RewriteCond %{HTTP_HOST} !^www.
   RewriteRule ^(.*)$ https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 </IfModule>
 ```
-## Strip www. add https DOESN'T WORK!!!!!
+## Strip www. add https
 ```apache
 <IfModule mod_rewrite.c>
-  RewriteEngine On
-  RewriteCond %{HTTPS} off
   RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
-  RewriteRule ^(.*)$ https://%1%{REQUEST_URI} [L,R=301]
-<IfModule>
-```
-## This does:
-```apache
+  RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+#or using the hardcoded domain
 <IfModule mod_rewrite.c>
   RewriteEngine on
   RewriteCond %{HTTP_HOST} ^www. [NC,OR]
   RewriteCond %{HTTPS} off
   RewriteRule ^(.*)$ https://DOMAIN.com/$1 [L,R=301]
+<IfModule>
+
+#not working
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTPS} off
+  RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+  RewriteRule ^(.*)$ https://%1%{REQUEST_URI} [L,R=301]
 <IfModule>
 ```
 
