@@ -56,6 +56,11 @@ add_filter( 'wp_nav_menu_args', 'ecotechie_wp_nav_menu_args' );
 wp db query "SELECT option_name, length(option_value) AS option_value_length FROM wp_options WHERE autoload='yes' ORDER BY option_value_length DESC LIMIT 20;"
 ```
 
+## Get largest database tables in a "nice" format, excluding anything smaller than 1MB
+```PHP
+wp db size --skip-plugins --format=csv --human-readable --all-tables | sed 's/ //g' | sort -k2 -h -t"\"" | grep KB -v | column -t -s, | sed 's/"//g'
+```
+
 ## Set database option to not autoload
 ```php
 wp db query "UPDATE $(wp db prefix)options SET autoload='no' WHERE option_name='OPTION_NAME'"
