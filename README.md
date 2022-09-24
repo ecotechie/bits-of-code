@@ -58,7 +58,7 @@ wp db query "SELECT option_name, length(option_value) AS option_value_length FRO
 
 ## Get largest database tables in a "nice" format, excluding anything smaller than 1MB
 ```PHP
-wp db size --skip-plugins --format=csv --human-readable --all-tables | sed 's/ //g' | sort -k2 -h -t"\"" | grep KB -v | column -t -s, | sed 's/"//g'
+wp db size --skip-plugins --format=csv --human-readable --all-tables | sed 's/ //g' | sort -k2 -h -t'\"' | grep KB -v | column -t -s, | sed 's/"//g'
 ```
 
 ## Set database option to not autoload
