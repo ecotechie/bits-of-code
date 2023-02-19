@@ -161,19 +161,19 @@ find . -type d | while read dir; do echo "$dir" : $(find "$dir" -type f | wc -l)
 ## List directories and files sorted by size
 _From [StackOverflow](https://stackoverflow.com/a/14749369)_
 ```bash
-du -a -h --max-depth=1 | sort -h
+du --all --apparent-size --human-readable --max-depth=1 | sort -h
 ```
 
 ## Show total size of files of type (.jpg) recursively in a directory (.)
 _From [StackExchange](https://unix.stackexchange.com/a/41552)_
 ```bash
-find . -type f -name '*.jpg' -exec du -ch {} + | grep total$
+find . -type f -name '*.jpg' -exec du --apparent-size --human-readable --total {} + | grep total$
 ```
 
 ## Show total size of a directory (.)
 _From [StackExchange](https://unix.stackexchange.com/a/185765)_
 ```bash
-du -sh .
+du --summarize --human-readable --apparent-size .
 ```
 
 ## TTL value of a DNS record
