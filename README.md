@@ -161,7 +161,7 @@ find . -type d | while read dir; do echo "$dir" : $(find "$dir" -type f | wc -l)
 ## List directories and files sorted by size
 _From [StackOverflow](https://stackoverflow.com/a/14749369)_
 ```bash
-du --all --apparent-size --human-readable --max-depth=1 | sort -h
+du --all --apparent-size --human-readable --max-depth=1 2>/dev/null | sort -h
 ```
 
 ## Show total size of files of type (.jpg) recursively in a directory (.)
