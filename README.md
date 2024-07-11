@@ -152,6 +152,10 @@ tail --follow FILE_NAME
 df -hT
 ```
 
+## List directories sorted by total number of files
+```bash
+du -a | cut -d/ -f2 | sort | uniq -c | sort -n
+
 ## List directories sorted by total number of files recursively, starting with (.)
 _From [StackExchange](https://superuser.com/a/325174)_
 ```bash
